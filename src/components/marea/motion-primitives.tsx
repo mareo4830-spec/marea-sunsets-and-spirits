@@ -13,21 +13,24 @@ export function MaskReveal({
   className?: string;
   as?: "div" | "span";
 }) {
-  const Tag = as === "span" ? "span" : "div";
   return (
-    <Tag className={`overflow-hidden ${as === "span" ? "inline-block align-bottom" : "block"}`}>
-      <motion.div
-        className={className}
-        initial={{ y: "110%" }}
-        whileInView={{ y: "0%" }}
-        viewport={{ once: true, amount: 0.4 }}
+    <motion.span
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.1 }}
+      className={`overflow-hidden ${as === "span" ? "inline-block align-bottom" : "block"}`}
+    >
+      <motion.span
+        className={`block ${className}`}
+        variants={{ hidden: { y: "110%" }, show: { y: "0%" } }}
         transition={{ duration: 1, delay, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
-      </motion.div>
-    </Tag>
+      </motion.span>
+    </motion.span>
   );
 }
+
 
 /** Imagen que pasa de borrosa a nítida subiendo suavemente. Se queda fija. */
 export function BlurImage({
